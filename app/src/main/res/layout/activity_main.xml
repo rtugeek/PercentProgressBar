@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#efefef"
+    android:gravity="center|left"
+    tools:context=".MainActivity">
+
+    <com.wisdom.progressbar.PercentProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:progress="18"
+        app:textSize="20sp"
+        app:radius="25dp"
+        app:barHeight="50dp"
+        app:borderSize="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textColor="#000" />
+
+
+    <TextView
+        android:layout_marginTop="32dp"
+        android:text="Bar Height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <SeekBar
+        android:id="@+id/bar_height"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="20"
+        android:min="12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="Radius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <SeekBar
+        android:id="@+id/radio_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="30"
+        android:min="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="Border Size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <SeekBar
+        android:id="@+id/border_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10"
+        android:min="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="Border Color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.rtugeek.android.colorseekbar.ColorSeekBar
+        android:id="@+id/border_color"
+        android:layout_width="match_parent"
+        app:colorSeeds="@array/material_colors"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="Progress Color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.rtugeek.android.colorseekbar.ColorSeekBar
+        android:id="@+id/progress_color"
+        android:layout_width="match_parent"
+        app:colorSeeds="@array/material_colors"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:text="Background Color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.rtugeek.android.colorseekbar.ColorSeekBar
+        android:id="@+id/background_color"
+        app:colorBarPosition="25"
+        android:layout_width="match_parent"
+        app:colorSeeds="@array/material_colors"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:id="@+id/remain_mode"
+        android:checked="true"
+        android:text="Remain Mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
