@@ -1,5 +1,6 @@
 package com.wisdom.progressbar
 
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
@@ -53,6 +54,10 @@ class MainActivity : AppCompatActivity() {
             progressBar.setProgressColor(color)
         }
 
+        val intArray = IntArray(2)
+        intArray[0] = Color.WHITE
+        intArray[1] = Color.BLACK
+        border_color.setColorSeeds(intArray)
         border_color.setOnColorChangeListener { colorBarPosition, alphaBarPosition, color ->
             progressBar.setBorderColor(color)
         }
