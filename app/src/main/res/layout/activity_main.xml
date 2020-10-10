@@ -10,7 +10,7 @@
     android:gravity="center|left"
     tools:context=".MainActivity">
 
-    <com.wisdom.progressbar.PercentProgressBar
+    <com.rtugeek.percentprogressbar.PercentProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

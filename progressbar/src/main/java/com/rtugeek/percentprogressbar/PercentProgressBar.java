@@ -1,4 +1,4 @@
-package com.wisdom.progressbar;
+package com.rtugeek.percentprogressbar;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
