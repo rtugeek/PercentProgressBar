@@ -16,10 +16,6 @@
         android:layout_height="wrap_content"
         android:text="Hello World!"
         app:progress="18"
-        app:textSize="20sp"
-        app:radius="25dp"
-        app:barHeight="50dp"
-        app:borderSize="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -44,9 +40,24 @@
 
     <TextView
         android:layout_marginTop="16dp"
+        android:text="Progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <SeekBar
+        android:id="@+id/radio_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:min="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_marginTop="16dp"
         android:text="Radius"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <SeekBar
         android:id="@+id/radio_radius"

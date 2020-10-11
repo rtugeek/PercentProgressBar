@@ -8,6 +8,7 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -116,7 +117,7 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         }
 
         progressBar.setProgressDrawable(layerDrawable);
-        setProgress(progress,true);
+        setProgress(progress, true);
     }
 
     public void setRadius(int radiusInPx) {
@@ -169,11 +170,14 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     }
 
     public void setTextSize(float size) {
-        mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 
-    public void setTextSizeInSp(float size) {
-        mLabel.setTextSize(size);
+    public void setTextSize(int unit, float size) {
+        mLabel.setTextSize(unit, size);
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(mLabel.getTextSize());
+        mLabel.setMinWidth((int) textPaint.measureText("100%"));
     }
 
     public void setProgress(int progress) {
@@ -202,7 +206,6 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     }
 
 
-
     public void setProgressColor(int progressColor) {
         this.progressColor = progressColor;
         updateProgressBarDrawable();
@@ -227,8 +230,6 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         mLabel.setText(value + "%");
         progressBar.setProgress(value);
     }
-
-
 
 
 }
