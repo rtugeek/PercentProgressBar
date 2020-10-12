@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         radio_progress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                progressBar.setProgress(progress)
+                progressBar.setPercent(progress / 100.0)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -78,11 +78,6 @@ class MainActivity : AppCompatActivity() {
         background_color.setOnColorChangeListener { colorBarPosition, alphaBarPosition, color ->
             progressBar.setBackgroundColor(color)
         }
-
-        remain_mode.setOnCheckedChangeListener { buttonView, isChecked ->
-            progressBar.setRemainMode(isChecked)
-        }
-
     }
 
     fun Int.dp(): Float {

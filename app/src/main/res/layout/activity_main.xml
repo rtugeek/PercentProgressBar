@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="#efefef"
     android:gravity="center|left"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
     <com.rtugeek.percentprogressbar.PercentProgressBar
@@ -15,19 +15,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        app:progress="18"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:percent="0.18"
         app:textColor="#000" />
 
 
     <TextView
-        android:layout_marginTop="32dp"
-        android:text="Bar Height"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Bar Height" />
 
     <SeekBar
         android:id="@+id/bar_height"
@@ -39,10 +39,10 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:layout_marginTop="16dp"
-        android:text="Progress"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Percent" />
 
     <SeekBar
         android:id="@+id/radio_progress"
@@ -54,10 +54,10 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:layout_marginTop="16dp"
-        android:text="Radius"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Radius" />
 
     <SeekBar
         android:id="@+id/radio_radius"
@@ -69,10 +69,10 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:layout_marginTop="16dp"
-        android:text="Border Size"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Border Size" />
 
     <SeekBar
         android:id="@+id/border_size"
@@ -85,45 +85,40 @@
 
 
     <TextView
-        android:layout_marginTop="16dp"
-        android:text="Border Color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Border Color" />
 
     <com.rtugeek.android.colorseekbar.ColorSeekBar
         android:id="@+id/border_color"
         android:layout_width="match_parent"
-        app:colorSeeds="@array/material_colors"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:colorSeeds="@array/material_colors" />
+
     <TextView
-        android:layout_marginTop="16dp"
-        android:text="Progress Color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Progress Color" />
 
     <com.rtugeek.android.colorseekbar.ColorSeekBar
         android:id="@+id/progress_color"
         android:layout_width="match_parent"
-        app:colorSeeds="@array/material_colors"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:colorSeeds="@array/material_colors" />
 
     <TextView
-        android:layout_marginTop="16dp"
-        android:text="Background Color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Background Color" />
 
     <com.rtugeek.android.colorseekbar.ColorSeekBar
         android:id="@+id/background_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:colorBarPosition="25"
-        android:layout_width="match_parent"
-        app:colorSeeds="@array/material_colors"
-        android:layout_height="wrap_content" />
+        app:colorSeeds="@array/material_colors" />
 
-    <CheckBox
-        android:id="@+id/remain_mode"
-        android:checked="true"
-        android:text="Remain Mode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 </LinearLayout>

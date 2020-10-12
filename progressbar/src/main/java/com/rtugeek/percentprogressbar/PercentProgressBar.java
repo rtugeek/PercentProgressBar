@@ -24,16 +24,15 @@ import android.widget.TextView;
  */
 public class PercentProgressBar extends RelativeLayout implements ValueAnimator.AnimatorUpdateListener {
     private android.widget.ProgressBar progressBar;
-    private TextView mLabel;
+    private TextView label;
     private int barHeight;
     private int borderSize;
     private int borderColor;
     private int radius;
-    private int max;
-    private int progress;
+    private final int maxProgress = 1000;
+    private float percent;
     private int progressColor;
     private int backgroundColor;
-    private boolean remainMode;
     private ValueAnimator animator = new ValueAnimator();
 
     public PercentProgressBar(Context context) {
@@ -66,9 +65,7 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         borderColor = a.getInteger(R.styleable.PercentProgressBar_borderColor, Color.WHITE);
         backgroundColor = a.getInteger(R.styleable.PercentProgressBar_backgroundColor, Color.WHITE);
         progressColor = a.getColor(R.styleable.PercentProgressBar_progressColor, 0xff649FF7);
-        progress = a.getInteger(R.styleable.PercentProgressBar_progress, 0);
-        max = a.getInteger(R.styleable.PercentProgressBar_max, 100);
-        remainMode = a.getBoolean(R.styleable.PercentProgressBar_remainMode, true);
+        percent = a.getFloat(R.styleable.PercentProgressBar_percent, 0);
 
         int textColor = a.getInteger(R.styleable.PercentProgressBar_textColor, Color.BLACK);
         float textSize = a.getDimensionPixelSize(R.styleable.PercentProgressBar_textSize, 0);
@@ -77,16 +74,15 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
 
         View inflate = LayoutInflater.from(context).inflate(R.layout.progress_bar, this);
         progressBar = inflate.findViewById(R.id.progress);
-        mLabel = inflate.findViewById(R.id.tv_label);
+        label = inflate.findViewById(R.id.tv_label);
 
 
         updateProgressBarDrawable();
-        setProgress(progress);
-        setRemainMode(remainMode);
+        setPercent(percent, true);
 
         //init label
         if (textSize == 0) {
-            textSize = mLabel.getTextSize();
+            textSize = label.getTextSize();
         }
         setTextSize(textSize);
         setTextColor(textColor);
@@ -117,23 +113,12 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         }
 
         progressBar.setProgressDrawable(layerDrawable);
-        setProgress(progress, true);
+        setPercent(percent, true);
     }
 
     public void setRadius(int radiusInPx) {
         this.radius = radiusInPx;
         updateProgressBarDrawable();
-    }
-
-    public void setRemainMode(boolean remainMode) {
-        this.remainMode = remainMode;
-        if (this.remainMode) {
-            progressBar.setScaleX(-1);
-        } else {
-            progressBar.setScaleX(1);
-        }
-
-        setProgress(progress);
     }
 
     public void setBorderColor(int borderColor) {
@@ -146,10 +131,6 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         updateProgressBarDrawable();
     }
 
-    public void setMax(int max) {
-        this.max = max;
-    }
-
     public void setBarHeight(int heightInPx) {
         barHeight = heightInPx;
         ViewGroup.LayoutParams layoutParams = progressBar.getLayoutParams();
@@ -158,15 +139,15 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     }
 
     public int getTextColor() {
-        return mLabel.getCurrentTextColor();
+        return label.getCurrentTextColor();
     }
 
     public void setTextColor(int color) {
-        mLabel.setTextColor(color);
+        label.setTextColor(color);
     }
 
     public float getTextSize() {
-        return mLabel.getTextSize();
+        return label.getTextSize();
     }
 
     public void setTextSize(float size) {
@@ -174,14 +155,14 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     }
 
     public void setTextSize(int unit, float size) {
-        mLabel.setTextSize(unit, size);
+        label.setTextSize(unit, size);
         TextPaint textPaint = new TextPaint();
-        textPaint.setTextSize(mLabel.getTextSize());
-        mLabel.setMinWidth((int) textPaint.measureText("100%"));
+        textPaint.setTextSize(label.getTextSize());
+        label.setMinWidth((int) textPaint.measureText("100%"));
     }
 
-    public void setProgress(int progress) {
-        setProgress(progress, true);
+    public void setPercent(double percent) {
+        setPercent(percent, true);
     }
 
     public void setBackgroundColor(int color) {
@@ -190,18 +171,19 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     }
 
 
-    public void setProgress(int progress, boolean animation) {
-        this.progress = progress;
-        this.progress = Math.max(this.progress, 0);
-        this.progress = Math.min(this.progress, max);
+    public void setPercent(double percent, boolean animation) {
+        int progress = (int) Math.floor(percent * maxProgress);
+        progress = Math.max(progress, 0);
+        progress = Math.min(progress, maxProgress);
         if (animation) {
-            animator.setIntValues(remainMode ? max : 0, progress);
+            animator.setIntValues(progressBar.getProgress(), progress);
             animator.setDuration(1000);
             animator.addUpdateListener(this);
             animator.start();
         } else {
             animator.cancel();
-            progressBar.setProgress(this.progress);
+            progressBar.setProgress(progress);
+            label.setText(String.format("%.0f%%", percent * 100));
         }
     }
 
@@ -216,7 +198,7 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     }
 
     public TextView getLabel() {
-        return mLabel;
+        return label;
     }
 
     private int dp2px(float dpValue) {
@@ -226,9 +208,11 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
 
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
-        int value = (int) animation.getAnimatedValue();
-        mLabel.setText(value + "%");
-        progressBar.setProgress(value);
+        int progressValue = (int) animation.getAnimatedValue();
+        System.out.println("onAnimationUpdate:" + progressValue);
+        int percentValue = progressValue / 10;
+        label.setText(String.format("%d%%", percentValue));
+        progressBar.setProgress(progressValue);
     }
 
 
