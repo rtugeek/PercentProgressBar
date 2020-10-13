@@ -8,9 +8,13 @@
         <attr name="radius" format="dimension" />
         <attr name="max" format="integer" />
         <attr name="percent" format="float" />
-        <attr name="textSize" format="dimension"/>
-        <attr name="progressColor" format="color"/>
-        <attr name="backgroundColor" format="color"/>
-        <attr name="remainMode" format="boolean"/>
+        <attr name="direction" format="enum">
+            <enum name="LEFT_TO_RIGHT" value="0" />
+            <enum name="RIGHT_TO_LEFT" value="1" />
+        </attr>
+        <attr name="textSize" format="dimension" />
+        <attr name="progressColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="remainMode" format="boolean" />
     </declare-styleable>
 </resources>

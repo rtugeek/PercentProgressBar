@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import com.rtugeek.percentprogressbar.PercentProgressBar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val intArray = IntArray(2)
-        intArray[0] = Color.WHITE
+        intArray[0] = Color.LTGRAY
         intArray[1] = Color.BLACK
         border_color.setColorSeeds(intArray)
         border_color.setOnColorChangeListener { colorBarPosition, alphaBarPosition, color ->
@@ -77,6 +78,14 @@ class MainActivity : AppCompatActivity() {
 
         background_color.setOnColorChangeListener { colorBarPosition, alphaBarPosition, color ->
             progressBar.setBackgroundColor(color)
+        }
+
+        radio_direction.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.radio_left) {
+                progressBar.direction = PercentProgressBar.Direction.LEFT_TO_RIGHT
+            } else {
+                progressBar.direction = PercentProgressBar.Direction.RIGHT_TO_LEFT
+            }
         }
     }
 
