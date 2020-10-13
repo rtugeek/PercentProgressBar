@@ -83,8 +83,9 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         label = inflate.findViewById(R.id.tv_label);
 
 
+        setDirection(direction);
         updateProgressBarDrawable();
-        setPercent(percent, true);
+        setPercent(percent, false);
 
         //init label
         if (textSize == 0) {
@@ -188,8 +189,8 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     /**
      * Use this to show animation
      *
-     * @param from
-     * @param to
+     * @param from start percent
+     * @param to   end percent
      */
     public void setPercent(double from, double to) {
         progressBar.setProgress(percentToProgressInt(from));
