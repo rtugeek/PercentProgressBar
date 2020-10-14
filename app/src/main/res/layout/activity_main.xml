@@ -10,6 +10,31 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <com.rtugeek.percentprogressbar.CircularPercentProgressBar
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:animate="true"
+        app:animateDuration="600"
+        app:fillColor="@color/colorPrimary"
+        app:progressValue="10"
+        app:circularProgressColor="#FFF"
+        app:clockwise="false"
+        app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
+        app:progressRoundCap="true"
+        app:progressTextColor="#FFF"
+        app:progressTextEnabled="true"
+        app:progressTextSize="32sp"
+        app:progressTextType="progress"
+        app:progressWidth="12dp"
+        app:totalColor="@color/colorPrimaryDark"
+        app:totalWidth="20dp" />
+
+
     <com.rtugeek.percentprogressbar.PercentProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

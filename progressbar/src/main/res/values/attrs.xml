@@ -17,4 +17,32 @@
         <attr name="backgroundColor" format="color" />
         <attr name="remainMode" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="CircularPercentProgressBar">
+        <attr name="totalValue" format="integer" />
+        <attr name="totalColor" format="color" />
+        <attr name="totalWidth" format="dimension" />
+        <attr name="clockwise" format="boolean" />
+
+        <attr name="progressValue" format="integer" />
+        <attr name="circularProgressColor" format="color" />
+        <attr name="progressWidth" format="dimension" />
+        <attr name="progressRoundCap" format="boolean" />
+
+        <attr name="progressTextEnabled" format="boolean" />
+        <attr name="progressTextType" format="enum">
+            <enum name="progress" value="0" />
+            <enum name="percent" value="1" />
+        </attr>
+        <attr name="progressTextSize" format="dimension" />
+        <attr name="progressTextColor" format="color" />
+        <attr name="progressInterpolator" format="reference" />
+
+        <attr name="fillColor" format="color" />
+
+        <attr name="startAngle" format="float" />
+
+        <attr name="animate" format="boolean" />
+        <attr name="animateDuration" format="integer" />
+    </declare-styleable>
 </resources>
