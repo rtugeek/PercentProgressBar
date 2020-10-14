@@ -2,8 +2,7 @@
 <a href="https://jitpack.io/#rtugeek/PercentProgressBar">![Release](https://jitpack.io/v/rtugeek/PercentProgressBar.svg)</a>  
 
 ### ScreenShot:
-
- ![](https://github.com/rtugeek/PercentProgressBar/blob/master/screenshot/snapshot.jpeg)
+<img src="https://github.com/rtugeek/PercentProgressBar/blob/master/screenshot/snapshot.jpeg" width="400">  
 
 ### Step 1. Add the JitPack repository in your root build.gradle at the end of repositories:
 ```
