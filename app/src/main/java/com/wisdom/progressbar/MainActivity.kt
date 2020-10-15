@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        progress_circular.setProgress(90, true);
+
         radio_radius.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 progressBar.setRadius(progress.dp().toInt())
@@ -24,10 +26,11 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+        progressBar.setPercent(0.5)
 
         radio_progress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                progressBar.setPercent(progress / 100.0)
+//                progressBar.setPercent(progress / 100.0)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

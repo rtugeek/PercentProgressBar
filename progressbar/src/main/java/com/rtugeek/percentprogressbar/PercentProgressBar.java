@@ -8,6 +8,8 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -17,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 /**
  * @author Jack Fu <rtugeek@gmail.com>
@@ -34,6 +38,16 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     private int backgroundColor;
     private Direction direction = Direction.LEFT_TO_RIGHT;
     private ValueAnimator animator = new ValueAnimator();
+
+    private final String KEY_BAR_HEIGHT = "bar_Height";
+    private final String KEY_BORDER_SIZE = "border_Size";
+    private final String KEY_BORDER_COLOR = "border_Color";
+    private final String KEY_BACKGROUND_COLOR = "background_Color";
+    private final String KEY_PROGRESS_COLOR = "progress_Color";
+    private final String KEY_DIRECTION = "direction";
+    private final String KEY_RADIUS = "radius";
+    private final String KEY_PERCENT = "percent";
+    private final String KEY_STATE = "key_state";
 
     public enum Direction {
         LEFT_TO_RIGHT,
@@ -252,5 +266,44 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         progressBar.setProgress(progressValue);
     }
 
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(KEY_STATE, super.onSaveInstanceState());
+        bundle.putInt(KEY_BAR_HEIGHT, barHeight);
+        bundle.putInt(KEY_BORDER_SIZE, borderSize);
+        bundle.putInt(KEY_RADIUS, radius);
+        bundle.putInt(KEY_BORDER_COLOR, borderColor);
+        bundle.putInt(KEY_BACKGROUND_COLOR, backgroundColor);
+        bundle.putInt(KEY_PROGRESS_COLOR, progressColor);
+        bundle.putDouble(KEY_PERCENT, percent);
+        bundle.putInt(KEY_DIRECTION, direction.ordinal());
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle) {
+            Bundle bundle = (Bundle) state;
+            barHeight = bundle.getInt(KEY_BAR_HEIGHT, barHeight);
+            borderSize = bundle.getInt(KEY_BORDER_SIZE, borderSize);
+            radius = bundle.getInt(KEY_RADIUS, radius);
+            borderColor = bundle.getInt(KEY_BORDER_COLOR, borderColor);
+            backgroundColor = bundle.getInt(KEY_BACKGROUND_COLOR, backgroundColor);
+            progressColor = bundle.getInt(KEY_PROGRESS_COLOR, progressColor);
+            percent = bundle.getDouble(KEY_PERCENT, percent);
+            bundle.getInt(KEY_DIRECTION, direction.ordinal());
+            super.onRestoreInstanceState(bundle.getParcelable(KEY_STATE));
+            return;
+        }
+        super.onRestoreInstanceState(state);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        animator.cancel();
+    }
 
 }
