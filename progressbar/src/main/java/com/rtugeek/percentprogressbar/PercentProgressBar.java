@@ -1,6 +1,8 @@
 package com.rtugeek.percentprogressbar;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -26,14 +28,18 @@ import androidx.annotation.Nullable;
  * @author Jack Fu <rtugeek@gmail.com>
  * @date 2020/10/10
  */
-public class PercentProgressBar extends RelativeLayout implements ValueAnimator.AnimatorUpdateListener {
+public class PercentProgressBar extends RelativeLayout implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
     private android.widget.ProgressBar progressBar;
     private TextView label;
     private int barHeight;
     private int borderSize;
     private int borderColor;
     private int radius;
-    private double percent;
+    /**
+     * 小数位数
+     */
+    private int decimalDigitSize = 0;
+    private float percent;
     private int progressColor;
     private int backgroundColor;
     private Direction direction = Direction.LEFT_TO_RIGHT;
@@ -48,6 +54,26 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
     private final String KEY_RADIUS = "radius";
     private final String KEY_PERCENT = "percent";
     private final String KEY_STATE = "key_state";
+
+    @Override
+    public void onAnimationStart(Animator animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        setPercentText(percent);
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation) {
+
+    }
 
     public enum Direction {
         LEFT_TO_RIGHT,
@@ -83,6 +109,7 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         radius = a.getDimensionPixelSize(R.styleable.PercentProgressBar_radius, 0);
         borderColor = a.getInteger(R.styleable.PercentProgressBar_borderColor, Color.WHITE);
         backgroundColor = a.getInteger(R.styleable.PercentProgressBar_backgroundColor, Color.WHITE);
+        decimalDigitSize = a.getInteger(R.styleable.PercentProgressBar_decimalDigitSize, 0);
         progressColor = a.getColor(R.styleable.PercentProgressBar_progressColor, 0xff649FF7);
         percent = a.getFloat(R.styleable.PercentProgressBar_percent, 0);
         direction = Direction.values()[a.getInt(R.styleable.PercentProgressBar_direction, 0)];
@@ -107,6 +134,9 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         }
         setTextSize(textSize);
         setTextColor(textColor);
+
+        animator.addUpdateListener(this);
+        animator.addListener(this);
     }
 
     public void setDirection(Direction direction) {
@@ -196,7 +226,7 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         label.setMinWidth((int) textPaint.measureText("100%"));
     }
 
-    public void setPercent(double percent) {
+    public void setPercent(float percent) {
         setPercent(percent, true);
     }
 
@@ -206,7 +236,7 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
      * @param from start percent
      * @param to   end percent
      */
-    public void setPercent(double from, double to) {
+    public void setPercent(float from, float to) {
         progressBar.setProgress(percentToProgressInt(from));
         setPercent(to, true);
     }
@@ -223,19 +253,34 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         return progress;
     }
 
+    public float getCurrentPercent() {
+        return progressBar.getProgress() / ((float) progressBar.getMax());
+    }
 
-    public void setPercent(double percent, boolean animation) {
+    public void setPercent(float percent, boolean animation) {
         this.percent = percent;
-        int progress = percentToProgressInt(percent);
+        int progressValue = percentToProgressInt(percent);
         if (animation) {
-            animator.setIntValues(progressBar.getProgress(), progress);
+            animator.setFloatValues(getCurrentPercent(), percent);
             animator.setDuration(1000);
-            animator.addUpdateListener(this);
             animator.start();
         } else {
             animator.cancel();
-            progressBar.setProgress(progress);
-            label.setText(String.format("%.0f%%", percent * 100));
+            progressBar.setProgress(progressValue);
+            setPercentText(percent);
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void setPercentText(float percent) {
+        float integerPart = (int) (percent * 100);
+        if (integerPart == 0 && decimalDigitSize > 0) {
+            float decimalsPart = percent * 100 - integerPart;
+            double pow = Math.pow(10, decimalDigitSize);
+            double decimals = ((int) (decimalsPart * pow)) / pow;
+            label.setText(String.format("%." + decimalDigitSize + "f%%", decimals));
+        } else {
+            label.setText(String.format("%.0f%%", integerPart));
         }
     }
 
@@ -260,10 +305,9 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
 
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
-        int progressValue = (int) animation.getAnimatedValue();
-        int percentValue = progressValue / 10;
-        label.setText(String.format("%d%%", percentValue));
-        progressBar.setProgress(progressValue);
+        float percent = (float) animation.getAnimatedValue();
+        setPercentText(percent);
+        progressBar.setProgress(percentToProgressInt(percent));
     }
 
     @Nullable
@@ -292,7 +336,7 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
             borderColor = bundle.getInt(KEY_BORDER_COLOR, borderColor);
             backgroundColor = bundle.getInt(KEY_BACKGROUND_COLOR, backgroundColor);
             progressColor = bundle.getInt(KEY_PROGRESS_COLOR, progressColor);
-            percent = bundle.getDouble(KEY_PERCENT, percent);
+            percent = bundle.getFloat(KEY_PERCENT, percent);
             bundle.getInt(KEY_DIRECTION, direction.ordinal());
             super.onRestoreInstanceState(bundle.getParcelable(KEY_STATE));
             return;
@@ -306,4 +350,17 @@ public class PercentProgressBar extends RelativeLayout implements ValueAnimator.
         animator.cancel();
     }
 
+    public int getDecimalDigitSize() {
+        return decimalDigitSize;
+    }
+
+    /**
+     * 设置小数精度显示位数，最大为5
+     *
+     * @param decimalDigitSize
+     */
+    public void setDecimalDigitSize(int decimalDigitSize) {
+        if (decimalDigitSize > 5) decimalDigitSize = 5;
+        this.decimalDigitSize = decimalDigitSize;
+    }
 }

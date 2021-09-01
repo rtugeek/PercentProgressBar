@@ -7,6 +7,7 @@
         <attr name="textColor" format="color" />
         <attr name="radius" format="dimension" />
         <attr name="max" format="integer" />
+        <attr name="decimalDigitSize" format="integer" />
         <attr name="percent" format="float" />
         <attr name="direction" format="enum">
             <enum name="LEFT_TO_RIGHT" value="0" />

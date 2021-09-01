@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        progressBar.setPercent(0.5)
+//        progressBar.setPercent(0.001f)
+        progressBar.setPercent(0.000023123f)
 
         radio_progress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
